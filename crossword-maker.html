@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Crossword Maker</title>
+        <script src="crossword-maker.js"></script>
+        <link rel="stylesheet" href="crossword-maker.css">
+    </head>
+    <body>
+        Content goes here.
+        <div id="crosswordPreview">
+            <input type="number" min="1" value="15" id="resolutionInput" onchange="updateGridPreview()">
+            <button id="generateGridButton" onclick="generateGrid()">Generate</button>
+            <canvas id="crosswordCanvas" height="400" width="400" style="border:1px solid #000000;"></canvas>
+        </div>
+        <div id="crosswordGenerated" class="hidden">
+            <div>
+                <p>Symmetry:</p>
+                <input type="radio" name="symmetry" id="noSymmetry" onchange="changeSymmetry(this)">
+                <label for="mirrorNone">None</label><br>
+                <input type="radio" name="symmetry" id="twoWaySymmetry" onchange="changeSymmetry(this)">
+                <label for="mirrorTwoWays">Two way</label><br>
+                <input type="radio" name="symmetry" id="fourWaySymmetry" onchange="changeSymmetry(this)" checked>
+                <label for="mirrorFourWays">Four Way</label>
+            </div>
+            <table id="crosswordGrid"></table>
+        </div>
+    </body>
+</html>
