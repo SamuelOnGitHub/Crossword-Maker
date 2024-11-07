@@ -21,6 +21,12 @@
                 <label for="mirrorTwoWays">Two way</label><br>
                 <input type="radio" name="symmetry" id="fourWaySymmetry" onchange="changeSymmetry(this)" checked>
                 <label for="mirrorFourWays">Four Way</label>
+                <div>
+                    <input type="radio" name="colour" id="whiteSquares" onchange="setColourToWhite()" checked>
+                    <label >White</label>
+                    <input type="radio" name="colour" id="blackSquares" onchange="setColourToBlack()" >
+                    <label >Black</label>
+                </div>
             </div>
             <table id="crosswordGrid"></table>
         </div>

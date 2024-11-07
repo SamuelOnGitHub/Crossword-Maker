@@ -1,6 +1,7 @@
 console.log("Hello :)");
 var resolution = 0;
 var symmetry = "2";
+var paintColour = "white";
 var painting = false;
 
 function generateGrid()
@@ -100,52 +101,93 @@ function toggleCell(cellID){
     cell = document.getElementById(cellID);
     cell.classList.toggle("darkCell");
 
+}
+
+function changeCellColour(cellID){
+    console.log("Changing colour of cell " + cellID + " to " + paintColour);
+    cell = document.getElementById(cellID);
+    if (paintColour == "black")
+    {
+        if (!cell.classList.contains("darkCell"))
+        {
+            cell.classList.add("darkCell");
+        }
+    }
+    if (paintColour == "white")
+    {
+        if (cell.classList.contains("darkCell"))
+        {
+            cell.classList.remove("darkCell")
+        }
+    }
+}
+
+function alterCellAndSiblings(cellID){
+    console.log("Altering cell" + cellID + " and siblings");
+
+    changeCellColour(cellID);
+        
+    cell = document.getElementById(cellID);
+    rCharIndex = cellID.indexOf("r");
+    cCharIndex = cellID.indexOf("c");
+    cellY = parseInt(cellID.substring(rCharIndex+1, cCharIndex));
+    cellX = parseInt(cellID.substring(cCharIndex+1));
+    console.log("Original cell coords parsed: " + cellX + "," + cellY);
     if (symmetry != "0")
     {
-        siblingX = resolution - 1 - cell.x;
-        siblingY = resolution - 1 - cell.y;
+        siblingX = resolution - 1 - cellX;
+        siblingY = resolution - 1 - cellY;
         siblingID = CellCoordinatesToID(siblingX, siblingY);
         if(siblingID != cellID)
         {
-            document.getElementById(siblingID).classList.toggle("darkCell");
+            changeCellColour(siblingID);
+            console.log("changing sibling " + siblingID);
         }
+        console.log("Resolution: " + resolution + "Original cell coords: " + cellX + "," + cellY + ". Sibling coords: " + siblingX + "," + siblingY);
         if (symmetry == "2")
         {
-            firstTwinID = CellCoordinatesToID(siblingY, cell.x);
-            secondTwinID = CellCoordinatesToID(cell.y, siblingX);
+            firstTwinID = CellCoordinatesToID(siblingY, cellX);
+            secondTwinID = CellCoordinatesToID(cellY, siblingX);
             if (firstTwinID != cellID)
             {
-                document.getElementById(firstTwinID).classList.toggle("darkCell");
+                changeCellColour(firstTwinID);
+                console.log("changing twin " + firstTwinID);
             }
             if (secondTwinID != cell.id)
             {
-                document.getElementById(secondTwinID).classList.toggle("darkCell");
+                changeCellColour(secondTwinID);
+                console.log("changing twin " + secondTwinID);
             }
         }
     }
 }
 
+
 function MouseUpOnCell(){
-    painting = false;
+    //painting = false;
 }
 
 function MouseDownOnCell(){
-    painting = true;
+    //painting = false;
 }
 
 function MouseOverCell(toggle){
+    /*
     if (painting)
     {
         cellID = CellCoordinatesToID(toggle.x, toggle.y);
-        toggleCell(cellID);
+        alterCellAndSiblings(cellID);
     }
+    */
 }
 
+
 function ClickOnCell(toggle){
+    console.log("Clicked on cell" + toggle.x + "," + toggle.y)
     if (!painting)
     {
         cellID = CellCoordinatesToID(toggle.x, toggle.y);
-        toggleCell(cellID);
+        alterCellAndSiblings(cellID);
     }
 }
 
@@ -180,4 +222,17 @@ function changeSymmetry(radioButton){
     {
         symmetry = 2;
     }
+    console.log("symmetry: " + symmetry);
+}
+
+function setColourToWhite()
+{
+    paintColour = "white";
+    console.log("Paint colour is now " + paintColour);
+}
+
+function setColourToBlack()
+{
+    paintColour = "black";
+    console.log("Paint colour is now " + paintColour);
 }
